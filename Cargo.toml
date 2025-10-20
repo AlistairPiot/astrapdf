@@ -1,0 +1,27 @@
+[package]
+name = "astrapdf"
+version = "0.1.0"
+edition = "2021"
+authors = ["AstraPDF Team"]
+description = "Transformez vos PDF en informations exploitables - CLI d'analyse PDF avancée"
+license = "MIT"
+
+[dependencies]
+# CLI framework
+clap = { version = "4.5", features = ["derive", "cargo"] }
+# PDF parsing
+lopdf = "0.34"
+pdf-extract = "0.7"
+# Text processing
+regex = "1.11"
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+csv = "1.3"
+# Error handling
+anyhow = "1.0"
+thiserror = "2.0"
+# Progress indicators
+indicatif = "0.17"
+# Colors for terminal
+colored = "2.1"

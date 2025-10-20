@@ -1,0 +1,32 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+test_pdfs/
+*.pdf
+!examples/*.pdf
+
+# Output files
+*.json
+*.csv
+*.txt
+!README.md
+!LICENSE
+
+# Build artifacts
+/dist/
+/build/
