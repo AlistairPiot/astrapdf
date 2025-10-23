@@ -143,15 +143,29 @@ impl Cli {
             }
 
             Commands::Batch {
-                paths: _,
-                keyword: _,
-                regex: _,
-                format: _,
-                output_dir: _,
+                paths,
+                keyword,
+                regex,
+                format,
+                output_dir,
             } => {
-                println!("{}", "🚀 Traitement batch en cours...".cyan().bold());
-                // TODO: Implémenter le traitement batch
-                println!("⚠️  Fonctionnalité en cours de développement");
+                use crate::batch::BatchProcessor;
+
+                // Créer le processeur batch à partir des paths
+                let processor = BatchProcessor::from_paths(paths.clone())?;
+
+                // Traiter tous les fichiers
+                let summary = processor.process(
+                    keyword.as_deref(),
+                    regex.as_deref(),
+                    2, // context_lines par défaut
+                );
+
+                // Afficher le résumé
+                BatchProcessor::display_summary(&summary);
+
+                // Exporter les résultats
+                BatchProcessor::export_summary(&summary, *format, output_dir)?;
             }
 
             Commands::Search {

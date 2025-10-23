@@ -3,6 +3,7 @@ use anyhow::{Context, Result};
 use lopdf::Document;
 use colored::Colorize;
 use regex::Regex;
+use serde::Serialize;
 
 use crate::error::AstraPdfError;
 
@@ -11,14 +12,14 @@ pub struct PdfAnalyzer {
     document: Document,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ExtractionResult {
     pub page_number: u32,
     pub content: String,
     pub matches: Vec<MatchResult>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct MatchResult {
     pub text: String,
     pub context_before: String,
@@ -195,13 +196,61 @@ impl PdfAnalyzer {
         Ok(())
     }
 
-    fn extract_text_from_page(&self, _page_num: u32) -> Result<String> {
+    fn extract_text_from_page(&self, page_num: u32) -> Result<String> {
+        // Essayer d'extraire la page spécifique avec lopdf
+        if let Some(&page_id) = self.document.get_pages().get(&page_num) {
+            // Extraire le contenu de la page spécifique
+            match self.extract_page_content(page_id) {
+                Ok(text) if !text.is_empty() => return Ok(text),
+                _ => {} // Fallback ci-dessous
+            }
+        }
+
+        // Fallback: extraire tout le PDF (comme avant)
+        // Utilisé si lopdf ne peut pas extraire la page ou si elle est vide
         let text = pdf_extract::extract_text_from_mem(&std::fs::read(&self.path)?)
             .context("Erreur lors de l'extraction du texte")?;
 
-        // Pour l'instant, on retourne tout le texte
-        // TODO: Améliorer pour extraire page par page
         Ok(text)
+    }
+
+    fn extract_page_content(&self, page_id: (u32, u16)) -> Result<String> {
+        // Récupérer le contenu de la page
+        let content = self.document.get_page_content(page_id)?;
+
+        // Extraire le texte du content stream
+        let mut text = String::new();
+        let content_str = String::from_utf8_lossy(&content);
+
+        // Parser basique des commandes Tj (show text) dans le content stream
+        // Format: (texte) Tj ou [(texte)] TJ
+        for line in content_str.lines() {
+            if let Some(extracted) = self.extract_text_from_content_line(line) {
+                text.push_str(&extracted);
+                text.push(' ');
+            }
+        }
+
+        Ok(text.trim().to_string())
+    }
+
+    fn extract_text_from_content_line(&self, line: &str) -> Option<String> {
+        // Chercher les patterns (text) Tj
+        if line.contains("Tj") || line.contains("TJ") {
+            // Extraction simplifiée du texte entre parenthèses
+            if let Some(start) = line.find('(') {
+                if let Some(end) = line.rfind(')') {
+                    if end > start {
+                        let text = &line[start + 1..end];
+                        // Nettoyer les caractères d'échappement PDF
+                        return Some(text.replace("\\(", "(")
+                                       .replace("\\)", ")")
+                                       .replace("\\\\", "\\"));
+                    }
+                }
+            }
+        }
+        None
     }
 
     fn get_pages_to_process(&self, pages_spec: &Option<String>) -> Result<Vec<u32>> {

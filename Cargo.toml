@@ -25,3 +25,5 @@ thiserror = "2.0"
 indicatif = "0.17"
 # Colors for terminal
 colored = "2.1"
+# Parallel processing
+rayon = "1.10"

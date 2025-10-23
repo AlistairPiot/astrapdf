@@ -2,6 +2,7 @@ mod cli;
 mod pdf;
 mod export;
 mod error;
+mod batch;
 
 use anyhow::Result;
 use cli::Cli;
