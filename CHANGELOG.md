@@ -8,10 +8,49 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 ## [Unreleased]
 
 ### À venir
-- Traitement batch avec multi-threading
-- Extraction page par page optimisée
-- Tests unitaires complets
+- Tests unitaires complets (>70% coverage)
 - Templates regex prédéfinis
+- Configuration file support (.astrapdf.toml)
+- Optimisation performance avec benchmarks
+
+## [0.2.0] - 2025-10-20
+
+### ✨ Stabilité et Performance
+
+#### Ajouté
+- **Extraction page par page optimisée**
+  - Utilisation de lopdf pour extraction ciblée des pages
+  - Parsing des content streams PDF
+  - Fallback automatique vers pdf-extract si échec
+  - Réduction significative de l'utilisation mémoire pour gros PDFs
+- **Batch processing fonctionnel**
+  - Multi-threading avec rayon pour traitement parallèle
+  - Progress bar en temps réel avec indicatif
+  - Gestion d'erreurs par fichier (un échec n'arrête pas le lot)
+  - Support répertoires et fichiers individuels
+  - Export consolidé (JSON, CSV, TXT)
+- **Module batch.rs** (300+ lignes)
+  - BatchProcessor avec from_paths()
+  - BatchResult et BatchSummary structures
+  - Statistiques détaillées (succès/échecs)
+- **Serialization support**
+  - ExtractionResult et MatchResult sont maintenant Serialize
+  - Compatible avec serde_json et csv
+
+#### Modifié
+- extract_text_from_page() maintenant extrait vraiment page par page
+- Commande batch pleinement implémentée (n'est plus TODO)
+- Amélioration gestion d'erreurs dans extraction
+
+#### Technique
+- Ajout dépendance rayon 1.10 pour parallélisation
+- Architecture modulaire maintenue
+- ~1000 lignes de code (+300)
+
+#### Performance
+- Traitement parallèle des PDFs en batch
+- Extraction page par page réduit RAM
+- Smart caching et fallback
 
 ## [0.1.0] - 2025-10-20
 
