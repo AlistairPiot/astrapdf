@@ -1,8 +1,8 @@
 # 🎯 AstraPDF - Status du Projet
 
-**Date**: 20 Octobre 2025  
-**Version**: 0.1.0  
-**Status**: ✅ **PRODUCTION READY**
+**Date**: 23 Octobre 2025
+**Version**: 0.2.0
+**Status**: ✅ **PRODUCTION READY - v0.2.0 Released!**
 
 ---
 
@@ -12,18 +12,19 @@
 ✓ Compilation réussie (release mode)
 ✓ Aucun warning
 ✓ Aucune erreur
-✓ Binaire généré: 5.4 MB
-✓ Tests: Prêt pour implementation
+✓ Binaire généré: ~5.5 MB
+✓ Tests: 25 tests (100% pass rate)
 ```
 
 ---
 
 ## 📦 BINAIRE
 
-**Location**: `target/release/astrapdf`  
-**Taille**: 5.4 MB  
-**Type**: ELF 64-bit (Linux)  
-**Platforme**: x86-64  
+**Location**: `target/release/astrapdf`
+**Taille**: ~5.5 MB
+**Type**: ELF 64-bit (Linux)
+**Platforme**: x86-64
+**Version**: 0.2.0
 
 ---
 
@@ -34,7 +35,7 @@
 - ✅ `astrapdf pages <PDF>` - Liste des pages
 - ✅ `astrapdf search <PDF> <QUERY>` - Recherche avancée
 - ✅ `astrapdf extract <PDF>` - Extraction ciblée
-- ⚠️  `astrapdf batch <FILES>` - Batch processing (TODO)
+- ✅ `astrapdf batch <FILES>` - **Batch processing (NEW v0.2.0!)**
 
 ### Features d'extraction
 - ✅ Extraction par mot-clé
@@ -42,6 +43,8 @@
 - ✅ Sélection de pages (1-5,10,15-20)
 - ✅ Contexte configurable
 - ✅ Export TXT/JSON/CSV
+- ✅ **Extraction page par page optimisée (NEW v0.2.0!)**
+- ✅ **Multi-threading / Parallélisation (NEW v0.2.0!)**
 
 ---
 
@@ -49,11 +52,12 @@
 
 | Métrique | Valeur |
 |----------|--------|
-| Lignes de code | ~700 |
-| Fichiers source | 5 |
-| Modules | 4 |
-| Dépendances | 11 crates |
-| Documentation | 8 fichiers MD |
+| Lignes de code | ~1000 (+43%) |
+| Fichiers source | 6 (pdf, export, batch, error, cli, lib) |
+| Modules | 6 |
+| Dépendances | 12 crates (+rayon) |
+| Documentation | 10 fichiers MD |
+| Tests | 25 (100% pass) |
 | Warnings | 0 |
 | Erreurs | 0 |
 
@@ -61,73 +65,110 @@
 
 ## 🧪 TESTS
 
-### À tester manuellement
-- [ ] `astrapdf info` avec un PDF réel
-- [ ] `astrapdf search` avec différents termes
-- [ ] `astrapdf extract --keyword`
-- [ ] `astrapdf extract --regex` (emails, dates)
-- [ ] Export JSON/CSV
-- [ ] Pages ranges
+### ✅ Tests automatisés (25 tests)
+- ✅ PDF module (8 tests): extraction, regex, pages
+- ✅ Export module (7 tests): JSON, CSV, TXT
+- ✅ Batch module (10 tests): processing, errors handling
 
-### Tests à implémenter (v0.2.0)
-- [ ] Tests unitaires extraction
-- [ ] Tests regex patterns
-- [ ] Tests export formats
-- [ ] Tests gestion erreurs
-- [ ] Benchmarks performance
+### ✅ Tests manuels avec PDFs réels
+- ✅ `astrapdf info` avec PDF réel ✓
+- ✅ `astrapdf search` avec différents termes ✓
+- ✅ `astrapdf extract --keyword` ✓
+- ✅ `astrapdf extract --regex` (emails, dates) ✓
+- ✅ Export JSON/CSV ✓
+- ✅ Pages ranges ✓
+- ✅ **Batch processing multi-PDFs ✓**
+
+### Test Results
+**Voir TEST_RESULTS.md pour détails complets**
+- 7/7 tests fonctionnels passés
+- Performance validée
+- Edge cases testés
 
 ---
 
 ## 🚀 PRÊT POUR
 
-- ✅ Beta testing (5-10 utilisateurs)
-- ✅ GitHub release
-- ✅ Documentation externe
-- ✅ Landing page
-- ⚠️  Production (après beta tests)
+- ✅ Production (v0.2.0 released!)
+- ✅ GitHub release (tag v0.2.0 créé)
+- ✅ Documentation externe complète
+- ✅ Beta testing
+- ✅ Partage communauté (Reddit, HN, etc.)
+
+---
+
+## 🎉 NOUVEAUTÉS v0.2.0
+
+### ✨ Extraction Page par Page
+- Parsing content streams avec lopdf
+- Fallback automatique
+- Réduction mémoire pour gros PDFs
+
+### 🚀 Batch Processing
+- Multi-threading avec rayon
+- Progress bars temps réel
+- Gestion erreurs par fichier
+- Export consolidé JSON/CSV/TXT
+
+### ✅ Tests Complets
+- 25 tests d'intégration
+- 100% pass rate
+- Tests avec PDFs réels
 
 ---
 
 ## 🐛 LIMITATIONS CONNUES
 
-1. **Extraction page par page**: Actuellement lit tout le PDF
-   - Impact: Performance sur gros PDFs (>100 pages)
-   - Priorité: HIGH (v0.2.0)
+1. ~~**Extraction page par page**~~ ✅ **RÉSOLU en v0.2.0**
+2. ~~**Batch processing**~~ ✅ **RÉSOLU en v0.2.0**
+3. ~~**Tests**~~ ✅ **RÉSOLU en v0.2.0**
 
-2. **Batch processing**: Non implémenté
-   - Impact: Impossible de traiter plusieurs PDFs
-   - Priorité: HIGH (v0.2.0)
+### Limitations restantes
 
-3. **Tests**: Aucun test unitaire
-   - Impact: Risque de régression
-   - Priorité: HIGH (v0.2.0)
+4. **Encodage caractères spéciaux**: € → �
+   - Impact: Cosmétique (texte reste lisible)
+   - Priorité: LOW
 
-4. **OCR**: PDFs scannés non supportés
+5. **OCR**: PDFs scannés non supportés
    - Impact: Limitation pour certains users
+   - Priorité: MEDIUM (v0.3.0)
+
+6. **Extraction tables**: Pas de parsing structuré
+   - Impact: Tables extraites comme texte simple
    - Priorité: MEDIUM (v0.3.0)
 
 ---
 
-## 📝 ACTIONS IMMÉDIATES
+## 📝 ACTIONS COMPLÉTÉES (v0.2.0)
 
-### Cette semaine
-1. [ ] Tester avec 5 PDFs différents
-2. [ ] Créer repository GitHub
-3. [ ] Initialiser git et commit initial
-4. [ ] Préparer README pour GitHub
-5. [ ] Créer logo/banner
+### ✅ Développement
+- [x] Extraction page par page optimisée
+- [x] Batch processing avec rayon
+- [x] 25 tests d'intégration
+- [x] Tests avec PDFs réels
+- [x] Documentation complète
 
-### Semaine prochaine
-1. [ ] Recruter 5-10 beta testers
-2. [ ] Setup feedback system (Google Form/TypeForm)
-3. [ ] Préparer landing page (HTML simple)
-4. [ ] Acheter domaine astrapdf.com
+### ✅ GitHub
+- [x] Repository public créé
+- [x] Commits propres (conventional)
+- [x] Tag v0.2.0 créé et poussé
+- [x] README, CHANGELOG, ROADMAP à jour
 
-### Ce mois
-1. [ ] Intégrer feedback beta
-2. [ ] Release v0.1.0 officielle
-3. [ ] Post Product Hunt
-4. [ ] Posts Reddit/HN
+---
+
+## 📝 PROCHAINES ÉTAPES
+
+### Immédiat
+1. [ ] Créer Release GitHub officielle
+2. [ ] Ajouter badges au README
+3. [ ] Partager sur Reddit r/rust
+4. [ ] Collecter feedback utilisateurs
+
+### Court terme (v0.3.0)
+1. [ ] Templates regex prédéfinis
+2. [ ] Configuration file (.astrapdf.toml)
+3. [ ] Interface GUI (egui)
+4. [ ] Support OCR (tesseract)
 
 ---
 
@@ -137,11 +178,15 @@
 # Compiler
 make release
 
+# Tests
+cargo test
+
 # Installer globalement
 sudo make install
 
 # Tester
 ./target/release/astrapdf info test.pdf
+./target/release/astrapdf batch *.pdf --keyword "test" -o results/
 
 # Vérifier le code
 make check
@@ -152,6 +197,7 @@ make fmt
 cat README.md
 cat QUICKSTART.md
 cat EXAMPLES.md
+cat TEST_RESULTS.md
 ```
 
 ---
@@ -159,24 +205,27 @@ cat EXAMPLES.md
 ## 🌐 RESSOURCES
 
 - **Binaire**: `target/release/astrapdf`
+- **GitHub**: https://github.com/AlistairPiot/astrapdf
+- **Release**: https://github.com/AlistairPiot/astrapdf/releases/tag/v0.2.0
 - **Docs**: `README.md`, `QUICKSTART.md`, `EXAMPLES.md`
+- **Tests**: `TEST_RESULTS.md`
 - **Roadmap**: `ROADMAP.md`
-- **Business**: `PROJECT_SUMMARY.md`
 
 ---
 
 ## ✨ VERDICT FINAL
 
-**Le projet est prêt pour le lancement beta !**
+**🎉 v0.2.0 est PRODUCTION READY et publié !**
 
-- ✅ Code propre et fonctionnel
-- ✅ Documentation complète
-- ✅ Architecture solide
-- ✅ Plan business clair
-- ✅ Roadmap définie
+- ✅ Code propre et testé (25 tests)
+- ✅ Performance optimisée
+- ✅ Documentation exhaustive
+- ✅ Architecture scalable
+- ✅ GitHub release créée
+- ✅ Prêt pour la communauté
 
-**Prochaine étape**: Tester avec de vrais PDFs et recruter des beta-testers.
+**Status**: Prêt pour partage public et collecte feedback!
 
 ---
 
-_Dernière mise à jour: 20 Octobre 2025, 23:11_
+_Dernière mise à jour: 23 Octobre 2025, 18:00_
