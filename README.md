@@ -24,6 +24,7 @@ Les solutions existantes sont souvent lentes, coûteuses, ou mal adaptées à de
 -   📤 **Export multi-format** : TXT, JSON, CSV
 -   ⚡ **Traitement batch** : Analyse plusieurs PDFs en parallèle avec multi-threading
 -   🎨 **Interface colorée** : Output terminal agréable et lisible
+-   🖥️ **Interface graphique (GUI)** : Mode graphique intuitif avec egui (v0.3.0+)
 
 ## 🚀 Installation
 
@@ -51,6 +52,29 @@ echo 'alias astrapdf="~/path/to/astrapdf/target/release/astrapdf"' >> ~/.bashrc
 ```
 
 ## 📖 Utilisation
+
+### 🖥️ Mode GUI (Interface Graphique)
+
+```bash
+# Lancer l'interface graphique (nouveau en v0.3.0!)
+./target/release/astrapdf
+
+# Ou explicitement
+./target/release/astrapdf --gui
+```
+
+**Features GUI:**
+- Sélection de fichier avec dialogue natif
+- Affichage des informations PDF
+- Extraction par mot-clé, regex, ou pages
+- Visualisation des résultats avec highlighting
+- Export vers JSON/CSV/TXT
+
+📖 **Voir [GUI_GUIDE.md](GUI_GUIDE.md) pour le guide complet**
+
+---
+
+### 💻 Mode CLI (Ligne de commande)
 
 ### Afficher les informations d'un PDF
 
@@ -184,7 +208,15 @@ astrapdf extract article.pdf --keyword "méthodologie" --context 5
 
 ## 📊 Roadmap
 
-### Version 0.2.0 (Actuelle) ✅
+### Version 0.3.0 (Actuelle) ✅
+
+-   [x] Interface graphique avec egui
+-   [x] Sélection de fichiers native (rfd)
+-   [x] Visualisation des résultats avec highlighting
+-   [x] Support dual mode (CLI + GUI)
+-   [x] Export depuis la GUI
+
+### Version 0.2.0 ✅
 
 -   [x] Traitement batch avec multi-threading (rayon)
 -   [x] Extraction page par page optimisée
@@ -192,12 +224,13 @@ astrapdf extract article.pdf --keyword "méthodologie" --context 5
 -   [x] 25 tests d'intégration (100% pass)
 -   [x] Performance optimisée
 
-### Version 0.3.0 (Prochaine)
+### Version 0.4.0 (Prochaine)
 
--   [ ] Interface GUI légère (egui)
+-   [ ] Drag & drop de fichiers dans la GUI
+-   [ ] Templates regex prédéfinis
+-   [ ] Prévisualisation PDF intégrée
 -   [ ] Support OCR pour PDFs scannés
 -   [ ] Extraction de tables structurées
--   [ ] Templates regex prédéfinis
 -   [ ] Configuration file support
 
 ### Version 1.0.0

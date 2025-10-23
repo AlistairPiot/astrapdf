@@ -7,7 +7,7 @@ use serde::Serialize;
 
 use crate::pdf::ExtractionResult;
 
-#[derive(Debug, Clone, Copy, clap::ValueEnum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, clap::ValueEnum)]
 pub enum ExportFormat {
     Txt,
     Json,

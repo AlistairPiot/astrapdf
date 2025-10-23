@@ -1,6 +1,6 @@
 [package]
 name = "astrapdf"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 authors = ["AstraPDF Team"]
 description = "Transformez vos PDF en informations exploitables - CLI d'analyse PDF avancée"
@@ -27,3 +27,7 @@ indicatif = "0.17"
 colored = "2.1"
 # Parallel processing
 rayon = "1.10"
+# GUI framework
+eframe = "0.29"
+egui = "0.29"
+rfd = "0.15"  # Native file dialog

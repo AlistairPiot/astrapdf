@@ -40,6 +40,26 @@ impl PdfAnalyzer {
         })
     }
 
+
+    /// Retourne le nombre de pages
+    pub fn get_page_count(&self) -> u32 {
+        self.document.get_pages().len() as u32
+    }
+
+    /// Retourne les métadonnées du PDF
+    pub fn get_metadata(&self) -> Vec<(String, String)> {
+        let mut metadata = Vec::new();
+        if let Ok(info) = self.document.trailer.get(b"Info") {
+            if let Ok(info_dict) = info.as_dict() {
+                for (key, value) in info_dict.iter() {
+                    let key_str = String::from_utf8_lossy(key).to_string();
+                    let value_str = format!("{:?}", value);
+                    metadata.push((key_str, value_str));
+                }
+            }
+        }
+        metadata
+    }
     pub fn display_info(&self) -> Result<()> {
         println!("\n{}", "═══════════════════════════════════════".bright_blue());
         println!("{} {}", "📂 Fichier:".bold(), self.path.display());

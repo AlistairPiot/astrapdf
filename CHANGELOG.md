@@ -8,10 +8,55 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 ## [Unreleased]
 
 ### À venir
-- Tests unitaires complets (>70% coverage)
-- Templates regex prédéfinis
+- Drag & drop dans la GUI
+- Templates regex prédéfinis avec preview
+- Prévisualisation PDF intégrée
 - Configuration file support (.astrapdf.toml)
-- Optimisation performance avec benchmarks
+- Support OCR pour PDFs scannés
+
+## [0.3.0] - 2025-10-23
+
+### 🎨 Interface Graphique
+
+#### Ajouté
+- **Interface graphique complète avec egui**
+  - Mode dual : GUI ou CLI selon les arguments
+  - Sélection de fichiers avec dialogue natif (rfd)
+  - Affichage des informations PDF (métadonnées, pages, taille)
+  - 4 modes d'extraction : Mot-clé, Regex, Pages, Tout
+  - Configuration du contexte avec slider (0-10 lignes)
+  - Visualisation des résultats avec highlighting
+  - Export intégré vers JSON/CSV/TXT
+  - Barre de status en temps réel
+- **Nouveau module gui.rs** (450+ lignes)
+  - AstraPdfApp avec state management
+  - Intégration complète avec PdfAnalyzer
+  - Interface responsive et intuitive
+- **Documentation GUI**
+  - GUI_GUIDE.md : Guide complet d'utilisation
+  - Exemples de cas d'usage
+  - Troubleshooting et FAQ
+- **Helper methods dans PdfAnalyzer**
+  - get_page_count() : Retourne le nombre de pages
+  - get_metadata() : Extrait les métadonnées PDF
+
+#### Modifié
+- main.rs supporte maintenant dual mode (CLI + GUI)
+- Lancement sans arguments démarre la GUI
+- ExportFormat implémente PartialEq pour egui
+- lib.rs expose le module gui
+
+#### Technique
+- Ajout dépendances : eframe 0.29, egui 0.29, rfd 0.15
+- Binaire : ~6.2 MB (légère augmentation pour GUI)
+- ~1450 lignes de code (+450)
+- Compatible Linux, macOS, Windows
+
+#### Améliorations UX
+- Mode GUI pour utilisateurs non-techniciens
+- Dialogues de fichiers natifs
+- Résultats surlignés pour meilleure lisibilité
+- Messages de status clairs
 
 ## [0.2.0] - 2025-10-20
 

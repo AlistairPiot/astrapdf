@@ -2,6 +2,12 @@
 
 Guide de démarrage rapide en 5 minutes.
 
+## 🎯 Choix du mode
+
+AstraPDF propose **deux modes** :
+- **🖥️ GUI (Interface Graphique)** : Idéal pour usage interactif
+- **💻 CLI (Ligne de commande)** : Idéal pour scripts et automatisation
+
 ## Installation rapide
 
 ```bash
@@ -23,17 +29,33 @@ chmod +x install.sh
 ### 1️⃣ Vérifier l'installation
 
 ```bash
-astrapdf --version
-# Output: astrapdf 0.1.0
+./target/release/astrapdf --version
+# Output: astrapdf 0.3.0
 ```
 
-### 2️⃣ Afficher l'aide
+### 2️⃣ Mode GUI (Nouveau v0.3.0!)
 
 ```bash
-astrapdf --help
+# Lancer l'interface graphique
+./target/release/astrapdf
+
+# L'interface s'ouvre avec :
+# - Bouton pour ouvrir un PDF
+# - Options d'extraction
+# - Visualisation des résultats
+# - Export facile
 ```
 
-### 3️⃣ Analyser votre premier PDF
+📖 **Voir [GUI_GUIDE.md](GUI_GUIDE.md) pour le guide complet GUI**
+
+### 3️⃣ Mode CLI - Afficher l'aide
+
+```bash
+./target/release/astrapdf info --help
+./target/release/astrapdf extract --help
+```
+
+### 4️⃣ Analyser votre premier PDF (CLI)
 
 ```bash
 # Remplacez 'document.pdf' par votre fichier

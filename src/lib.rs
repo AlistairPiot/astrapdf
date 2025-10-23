@@ -3,3 +3,4 @@ pub mod pdf;
 pub mod export;
 pub mod error;
 pub mod batch;
+pub mod gui;
