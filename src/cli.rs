@@ -9,7 +9,7 @@ use crate::export::{ExportFormat, Exporter};
 #[derive(Parser)]
 #[command(name = "astrapdf")]
 #[command(author = "AstraPDF Team")]
-#[command(version = "0.1.0")]
+#[command(version)]
 #[command(about = "⇒ Transformez vos PDF en informations exploitables", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
