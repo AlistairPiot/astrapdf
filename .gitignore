@@ -30,3 +30,8 @@ test_pdfs/
 # Build artifacts
 /dist/
 /build/
+
+# Private/sensitive documentation
+ROADMAP.md
+PROJECT_SUMMARY.md
+STATUS.md

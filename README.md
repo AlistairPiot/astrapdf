@@ -22,7 +22,7 @@ Les solutions existantes sont souvent lentes, coûteuses, ou mal adaptées à de
 -   🔍 **Extraction ciblée** : Extrait par mot-clé, regex, ou numéros de pages
 -   🔎 **Recherche avancée** : Trouve des occurrences avec contexte
 -   📤 **Export multi-format** : TXT, JSON, CSV
--   ⚡ **Traitement batch** : Analyse plusieurs PDFs simultanément (en développement)
+-   ⚡ **Traitement batch** : Analyse plusieurs PDFs en parallèle avec multi-threading
 -   🎨 **Interface colorée** : Output terminal agréable et lisible
 
 ## 🚀 Installation
@@ -31,7 +31,7 @@ Les solutions existantes sont souvent lentes, coûteuses, ou mal adaptées à de
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/votre-compte/astrapdf.git
+git clone https://github.com/AlistairPiot/astrapdf.git
 cd astrapdf
 
 # Compiler en mode release
@@ -129,14 +129,17 @@ astrapdf extract document.pdf --pages "1-5,10-15"
 astrapdf extract document.pdf --pages "1,3-7,12" --keyword "article"
 ```
 
-### Traitement batch (en développement)
+### Traitement batch
 
 ```bash
-# Analyser un répertoire
+# Analyser un répertoire avec multi-threading
 astrapdf batch ./documents/*.pdf --keyword "important" --output-dir ./results
 
 # Plusieurs fichiers spécifiques
 astrapdf batch doc1.pdf doc2.pdf doc3.pdf --regex '\d+€' --format json --output-dir ./exports
+
+# Batch avec progress bar en temps réel
+astrapdf batch *.pdf --keyword "contrat" --format csv --output-dir ./extractions
 ```
 
 ## 🎯 Cas d'usage
@@ -181,44 +184,32 @@ astrapdf extract article.pdf --keyword "méthodologie" --context 5
 
 ## 📊 Roadmap
 
-### Version 0.1.0 (Actuelle)
+### Version 0.2.0 (Actuelle) ✅
 
--   [x] CLI de base
--   [x] Extraction par mot-clé
--   [x] Extraction par regex
--   [x] Export TXT/JSON/CSV
--   [x] Recherche avec contexte
+-   [x] Traitement batch avec multi-threading (rayon)
+-   [x] Extraction page par page optimisée
+-   [x] Progress bars temps réel
+-   [x] 25 tests d'intégration (100% pass)
+-   [x] Performance optimisée
 
-### Version 0.2.0
-
--   [ ] Traitement batch fonctionnel
--   [ ] Extraction page par page optimisée
--   [ ] Support des tables et annexes
--   [ ] Résumé automatique (algorithme basique)
-
-### Version 0.3.0
+### Version 0.3.0 (Prochaine)
 
 -   [ ] Interface GUI légère (egui)
 -   [ ] Support OCR pour PDFs scannés
--   [ ] Extraction d'images
--   [ ] Plugins / extensibilité
+-   [ ] Extraction de tables structurées
+-   [ ] Templates regex prédéfinis
+-   [ ] Configuration file support
 
 ### Version 1.0.0
 
--   [ ] Performance optimale
--   [ ] Tests complets
--   [ ] Documentation complète
--   [ ] Distribution multi-plateforme (Windows, macOS, Linux)
-
-## 💰 Modèle économique
-
-### Options envisagées
-
-1. **Licence annuelle** : 170€ / utilisateur
-2. **Abonnement SaaS** : 28€/mois
-3. **Freemium** : Extraction simple gratuite, fonctionnalités avancées payantes
+-   [ ] Distribution binaires multi-plateforme
+-   [ ] Package managers (Homebrew, Chocolatey, cargo)
+-   [ ] Documentation complète avec vidéos
+-   [ ] API REST pour intégrations
 
 ## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou soumettre une pull request.
 
 ## 📝 Licence
 
@@ -226,9 +217,8 @@ MIT License - voir le fichier LICENSE pour plus de détails
 
 ## 🌐 Contact
 
--   **Website** : [astrapdf.com](https://astrapdf.com) (à venir)
--   **Email** : contact@astrapdf.com
--   **Issues** : [GitHub Issues](https://github.com/votre-compte/astrapdf/issues)
+-   **GitHub** : [AlistairPiot/astrapdf](https://github.com/AlistairPiot/astrapdf)
+-   **Issues** : [GitHub Issues](https://github.com/AlistairPiot/astrapdf/issues)
 
 ---
 
