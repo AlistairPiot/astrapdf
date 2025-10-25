@@ -91,6 +91,7 @@ impl BatchProcessor {
                     keyword,
                     regex,
                     context_lines,
+                    false, // ignore_case
                 );
                 pb.inc(1);
                 result
@@ -116,6 +117,7 @@ impl BatchProcessor {
         keyword: Option<&str>,
         regex: Option<&str>,
         context_lines: usize,
+        ignore_case: bool,
     ) -> BatchResult {
         match PdfAnalyzer::new(file_path) {
             Ok(analyzer) => {
@@ -124,6 +126,7 @@ impl BatchProcessor {
                     &regex.map(String::from),
                     &None, // Toutes les pages
                     context_lines,
+                    false, // ignore_case par défaut
                 ) {
                     Ok(results) => BatchResult {
                         file_path: file_path.to_path_buf(),

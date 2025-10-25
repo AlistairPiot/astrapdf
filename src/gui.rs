@@ -17,6 +17,7 @@ pub struct AstraPdfApp {
     regex_pattern: String,
     pages_range: String,
     context_lines: usize,
+    ignore_case: bool,
 
     // Mode d'extraction
     extraction_mode: ExtractionMode,
@@ -56,6 +57,7 @@ impl Default for AstraPdfApp {
             regex_pattern: String::new(),
             pages_range: String::new(),
             context_lines: 2,
+            ignore_case: false,
             extraction_mode: ExtractionMode::Keyword,
             results: Vec::new(),
             status_message: "Bienvenue sur AstraPDF GUI".to_string(),
@@ -127,7 +129,8 @@ impl AstraPdfApp {
                         &Some(self.keyword.clone()),
                         &None,
                         &None,
-                        self.context_lines
+                        self.context_lines,
+                        self.ignore_case
                     )
                 }
                 ExtractionMode::Regex if !self.regex_pattern.is_empty() => {
@@ -135,7 +138,8 @@ impl AstraPdfApp {
                         &None,
                         &Some(self.regex_pattern.clone()),
                         &None,
-                        self.context_lines
+                        self.context_lines,
+                        self.ignore_case
                     )
                 }
                 ExtractionMode::Pages if !self.pages_range.is_empty() => {
@@ -143,7 +147,8 @@ impl AstraPdfApp {
                         &None,
                         &None,
                         &Some(self.pages_range.clone()),
-                        self.context_lines
+                        self.context_lines,
+                        self.ignore_case
                     )
                 }
                 ExtractionMode::All => {
@@ -151,7 +156,8 @@ impl AstraPdfApp {
                         &None,
                         &None,
                         &None,
-                        self.context_lines
+                        self.context_lines,
+                        self.ignore_case
                     )
                 }
                 _ => {
@@ -331,6 +337,8 @@ impl eframe::App for AstraPdfApp {
                     ui.horizontal(|ui| {
                         ui.label("Lignes de contexte:");
                         ui.add(egui::Slider::new(&mut self.context_lines, 0..=10));
+
+                    ui.checkbox(&mut self.ignore_case, "Ignorer la casse (A = a)");
                     });
 
                     ui.add_space(10.0);

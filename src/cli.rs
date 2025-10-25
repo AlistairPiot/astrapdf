@@ -58,6 +58,10 @@ pub enum Commands {
         #[arg(short = 'C', long, default_value = "2")]
         context: usize,
 
+        /// Recherche insensible à la casse
+        #[arg(short, long)]
+        ignore_case: bool,
+
         /// Format d'export (txt, json, csv)
         #[arg(short = 'f', long, value_enum, default_value = "txt")]
         format: ExportFormat,
@@ -133,10 +137,11 @@ impl Cli {
                 context,
                 format,
                 output,
+                ignore_case,
             } => {
                 println!("{}", "🔍 Extraction en cours...".cyan().bold());
                 let analyzer = PdfAnalyzer::new(pdf_path)?;
-                let results = analyzer.extract(keyword, regex, pages, *context)?;
+                let results = analyzer.extract(keyword, regex, pages, *context, *ignore_case)?;
 
                 let exporter = Exporter::new(*format);
                 exporter.export(&results, output.as_deref())?;

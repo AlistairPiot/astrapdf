@@ -135,6 +135,7 @@ impl PdfAnalyzer {
         regex_pattern: &Option<String>,
         pages_spec: &Option<String>,
         context_lines: usize,
+        ignore_case: bool,
     ) -> Result<Vec<ExtractionResult>> {
         let pages = self.get_pages_to_process(pages_spec)?;
         let mut results = Vec::new();
@@ -144,11 +145,11 @@ impl PdfAnalyzer {
             let mut matches = Vec::new();
 
             if let Some(kw) = keyword {
-                matches.extend(self.find_keyword_matches(&text, kw, page_num, context_lines)?);
+                matches.extend(self.find_keyword_matches(&text, kw, page_num, context_lines, ignore_case)?);
             }
 
             if let Some(pattern) = regex_pattern {
-                matches.extend(self.find_regex_matches(&text, pattern, page_num, context_lines)?);
+                matches.extend(self.find_regex_matches(&text, pattern, page_num, context_lines, ignore_case)?);
             }
 
             if !matches.is_empty() || (keyword.is_none() && regex_pattern.is_none()) {
@@ -306,12 +307,19 @@ impl PdfAnalyzer {
         keyword: &str,
         page_num: u32,
         context_lines: usize,
+        ignore_case: bool,
     ) -> Result<Vec<MatchResult>> {
         let lines: Vec<&str> = text.lines().collect();
         let mut matches = Vec::new();
 
         for (idx, line) in lines.iter().enumerate() {
-            if line.contains(keyword) {
+            let matches_keyword = if ignore_case {
+                line.to_lowercase().contains(&keyword.to_lowercase())
+            } else {
+                line.contains(keyword)
+            };
+
+            if matches_keyword {
                 let context_before = self.get_context(&lines, idx, context_lines, true);
                 let context_after = self.get_context(&lines, idx, context_lines, false);
 
@@ -334,6 +342,7 @@ impl PdfAnalyzer {
         pattern: &str,
         page_num: u32,
         context_lines: usize,
+        ignore_case: bool,
     ) -> Result<Vec<MatchResult>> {
         let regex = Regex::new(pattern)?;
         let lines: Vec<&str> = text.lines().collect();
