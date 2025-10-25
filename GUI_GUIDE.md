@@ -216,3 +216,26 @@ Pour utiliser les commandes CLI, ajoutez des arguments :
 ---
 
 **Interface créée avec ❤️ en Rust + egui** | **⇒ Transformez vos PDF en informations exploitables**
+
+---
+
+## ⚠️ Problèmes connus et solutions
+
+### Caractères spéciaux mal affichés (€, é, à, etc.)
+
+**Symptôme**: Les caractères accentués ou spéciaux s'affichent comme "�"
+
+**Cause**: Problème d'encodage dans le PDF source (pas un bug d'AstraPDF)
+
+**Solutions**:
+
+1. **Pour la lecture**: Même si l'affichage est incorrect, le texte est récupéré
+2. **Pour l'export**: Essayez d'exporter en UTF-8
+3. **Meilleure solution**: Recréer le PDF avec un bon encodage
+
+**Exemples de correspondances**:
+- `�` → `€` (euro)
+- `N�` → `N°` (numéro)
+- `g�n�r�e` → `générée`
+- `�mis` → `Émis`
+
