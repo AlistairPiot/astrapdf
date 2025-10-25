@@ -411,7 +411,8 @@ impl eframe::App for AstraPdfApp {
                                         }
 
                                         ui.label(egui::RichText::new(&m.text)
-                                            .background_color(egui::Color32::from_rgb(255, 255, 200))
+                                            .background_color(egui::Color32::from_rgb(255, 255, 150))
+                                            .color(egui::Color32::from_rgb(0, 0, 0))
                                             .strong());
 
                                         if !m.context_after.is_empty() {
